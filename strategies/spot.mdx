@@ -1,0 +1,109 @@
+---
+title: "Spot LP"
+icon: "star"
+---
+
+Cleopetra is designed to help you provide liquidity on DEXes with ease and efficiency. We’re rolling out a simple spot strategy for token liquidity positions during the private beta. Here's how it works, the risks involved, and some things you should know before trading.
+
+## How The Strategy Works
+
+When you create a spot LP position with Cleopetra, here's what happens:
+
+1. You provide a base token (like BONK or SEND)
+
+2. Cleopetra agent automatically:
+
+   - Finds the best pool with the highest fees
+   - Swaps 50% of your tokens into quote tokens (like SOL or USDC) to create a balanced position
+   - Sets up a concentrated position (20 price bins on each side)
+   - Monitors and rebalances your position every hour (if you enable this)
+   - Compounds earned fees back into your position during rebalancing
+
+3. Quote tokens are swapped back to base tokens when you close this position
+
+---
+
+## What Makes This Strategy Special?
+
+- **Concentrated Liquidity:** Instead of spreading your tokens across all prices, we focus on a range where trading is most likely to happen. This means you can earn more fees with the same amount of tokens.
+
+- **Auto-rebalancing:** If you enable it, Cleopetra checks your position every hour and rebalances if needed. This helps maintain optimal earning potential.
+
+- **Fee Compounding:** Any fees you earn get automatically put back into your position, helping your investment grow over time.
+
+---
+
+## Important Things To Know
+
+- **Position Limits:** You can have up to 2 active positions at a time during the beta.
+
+- **Rebalancing:** This is optional. You decide whether to enable it when creating your position.
+
+- **Token Split:** Cleopetra will automatically swap 50% of your tokens to create a balanced position.
+
+---
+
+## Understanding The Risks
+
+Trading and providing liquidity always comes with risks. Here are the main ones you should know about:
+
+1. **Impermanent Loss:**
+
+   - This is your biggest risk
+   - If one token's price changes a lot compared to the other, you might have been better off just holding
+   - The more volatile the tokens, the higher this risk
+   - Concentrated positions can make impermanent loss more severe.
+
+   _Example:_ You provide liquidity for SOL-USDC at `$200 SOL`. If the SOL price jumps to `$400`, your LP position will be worth less than if you had just held the SOL and USDC separately. In that case, you will be left with only USDC, and you will lose the SOL upside. That's the impermanent loss.
+
+2. **Smart Contract Risk:**
+
+   - Your funds interact with DEX contracts
+   - While these are usually audited, there's always some risk
+   - We only create positions on established DEXes like Meteora, Orca, and Raydium to minimize this risk
+
+3. **Market Risk:**
+
+   - Crypto prices can change dramatically
+   - Both tokens in your LP position could go down in value
+   - In extreme market conditions, your position might end up outside the price range
+
+4. **Technical Risk:**
+
+   - Network congestion could affect rebalancing
+   - There might be bugs in the beta version. Feel free to share any feedback [here](https://t.me/cleopetra_bot)
+
+---
+
+## Best Practices
+
+- **Start Small:** Test the strategy with a small amount first
+
+- **Monitor Your Positions:** Check how they're performing regularly
+
+- **Understand the Tokens:** Choose tokens you're comfortable holding long-term
+
+- **Consider the Market:** Volatile markets might not be the best time for LP positions in this strategy
+
+---
+
+## Position Creation Checklist
+
+Before confirming your position, make sure you:
+
+- Have at least 0.07 SOL for gas fees
+
+- [Understand how concentrated liquidity works](https://docs.uniswap.org/concepts/protocol/concentrated-liquidity)
+
+- Ensure you are comfortable with the rebalancing settings
+
+- Know how to monitor your position
+
+- Understand all the risks involved
+
+
+<Info>
+
+Remember: Cleopetra makes LPing easier, it doesn't eliminate the risks. Never invest more than you can afford to lose.
+
+</Info>
