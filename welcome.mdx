@@ -1,17 +1,11 @@
 ---
 title: Welcome to Cleopetra
+icon: "island-tropical"
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero.png"
-  alt="Hero Dark"
-/>
+<Frame>
+  <img src="/images/hero.png" alt="Hero Dark" className="rounded-lg" />
+</Frame> 
 
 Cleopetra is a seamless platform for liquidity provisioning on Solana DEXes, directly from Telegram!
 
@@ -20,25 +14,13 @@ Enter a token, pick an LP strategy of your choice and create the position — th
 ## Get Started
 
 <CardGroup cols={3}>
-  <Card
-    title="Quickstart Guide"
-    icon="bolt-lightning"
-    href="/quickstart"
-  >
+  <Card title="Quickstart Guide" icon="bolt" href="/quickstart">
     Learn how to use Cleopetra
   </Card>
-  <Card
-    title="FAQs"
-    icon="circle-question"
-    href="/faqs"
-  >
+  <Card title="FAQs" icon="circle-question" href="/faqs">
     Frequently Asked Questions
   </Card>
-  <Card
-    title="LP Strategies"
-    icon="bullseye"
-    href="/strategies/spot"
-  >
+  <Card title="LP Strategies" icon="bullseye" href="/strategies/spot">
     Learn about the different LP strategies
   </Card>
 </CardGroup>

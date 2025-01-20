@@ -1,5 +1,57 @@
 ---
-title: 'Quickstart'
+title: Quickstart
+icon: "bolt"
 ---
 
-work in progress!
+### Setting Up Your Wallet
+
+Open the [Cleopetra bot](https://t.me/cleopetra_bot) and run `/start` to get started. You may need to enter an invite code to join the platform.  
+
+Next, deposit funds into your wallet by copying the address. Make sure to deposit at least `0.07 SOL` for gas fees and any additional tokens required to create LP positions.
+
+<Frame>
+  <img src="/images/start.png" alt="start command" className="rounded-lg" />
+</Frame> 
+
+### Exploring Tokens
+
+Enter a token address in the bot chat to explore market data and view your wallet balance for that token.
+
+<Frame>
+  <img src="/images/token-overview.png" alt="token overview" className="rounded-lg" />
+</Frame> 
+
+### Creating LP Positions
+
+Click the `Open Position` button under the token details to create a new LP position. You will then be prompted to confirm the LP strategy and auto-rebalancing settings.  
+Currently, Cleopetra supports the Spot LP strategy. Learn more about it [here](/strategies/spot).
+
+Preview your LP position creation details, and once you're ready, click `Yes` to create the position.
+
+<Frame>
+  <img src="/images/create-position.png" alt="create position" className="rounded-lg" />
+</Frame> 
+
+<Icon icon="check" /> Congratulations! You’ve successfully created your first LP position.
+
+### Monitoring Positions
+
+The Cleopetra AI agent will automatically monitor and rebalance your positions (if enabled) to ensure they always remain in range and earn maximum fees.  
+
+You can also view your positions with the `/portfolio` command.
+
+<Frame>
+  <img src="/images/position-details.png" alt="position details" className="rounded-lg" />
+</Frame> 
+
+<Info>Click on the ticker of each position to view and manage them.</Info>
+
+### All Set!
+
+Congratulations—you’re now a successful Liquidity Provider on Solana! Make sure to try out these other commands:
+
+- `/wallet` — View and manage your wallet token balances.  
+- `/portfolio` — View and manage your active positions.  
+- `/settings` — Manage your bot settings, such as vault address and priority fees.  
+
+<Check>Remember, always make your money work for you!</Check>
