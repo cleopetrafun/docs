@@ -22,7 +22,7 @@
   "navigation": [
     {
       "group": "Overview",
-      "pages": ["welcome", "quickstart", "faqs"]
+      "pages": ["welcome", "quickstart", "faqs", "links"]
     },
     {
       "group": "Strategies",
