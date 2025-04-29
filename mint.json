@@ -17,20 +17,24 @@
   },
   "topbarCtaButton": {
     "name": "Use Cleopetra",
-    "url": "https://t.me/cleopetra_bot"
+    "url": "https://t.me/cleopetra_bot?start=ref_GOLD"
   },
   "navigation": [
     {
       "group": "Overview",
-      "pages": ["welcome", "quickstart", "faqs", "links"]
+      "pages": ["welcome", "quickstart", "faqs"]
     },
     {
       "group": "Strategies",
-      "pages": ["strategies/spot"]
+      "pages": ["strategies/spot", "strategies/single", "strategies/rebalancing"]
+    },
+    {
+      "group": "Community",
+      "pages": ["community/links", "community/deeplink"]
     }
   ],
   "footerSocials": {
     "x": "https://x.com/cleopetrafun",
-    "telegram": "https://t.me/cleopetra_bot"
+    "telegram": "https://t.me/+tevTmc09Vw44M2E1"
   }
 }

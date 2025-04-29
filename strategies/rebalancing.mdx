@@ -1,0 +1,87 @@
+---
+title: "Rebalancing Options"
+icon: "recycle"
+---
+
+Cleopetra offers two ways to rebalance your positions over time. Each strategy has different benefits depending on market conditions and your preferences.
+
+## 1. Standard Rebalance (Default)
+
+This is our standard approach that maintains balance in all market conditions. Your position is checked continuously based on selected schedule(5mins, 15mins, 30mins, or 1hr), and if it's already out of range or about to go, it will automatically get rebalanced to maintain the optimal price range and ratio between tokens.
+
+Imagine you create a position with 1 SOL (worth $200) in a BONK-SOL pool:
+
+**Initial setup:** Cleopetra converts 0.5 SOL to BONK (worth $100)
+
+1. **After price increase:** BONK price rises 50%, now your position has:
+
+   - Less BONK
+   - More SOL (maybe 0.97)
+
+   **Rebalancing triggers:** System detects imbalance during scheduled check
+
+   **Action taken:** Converts some SOL back to BONK to restore 50/50 balance
+
+   **Result:** Position returns to 50% BONK, 50% SOL (in value) and updated price range 
+
+2. **After price decrease:** BONK price falls 50%, now your position has:
+
+   - More BONK
+   - Less SOL (maybe 0.12)
+
+   **Rebalancing triggers:** System detects imbalance during scheduled check
+
+   **Action taken:** Converts some BONK to SOL to restore 50/50 balance
+
+   **Result:** Position returns to 50% BONK, 50% SOL (in value) and updated price range 
+
+---
+
+## 2. Dip Protection
+
+Dip Protection reduces impermanent loss by not rebalancing when your base token's price falls. Instead of selling more of your token at lower prices (which locks in losses), it keeps your position heavy in your original token during downtrends.
+
+This means when prices recover, you have more tokens to benefit from the upswing. You only rebalance to lock in profits during uptrends, not losses during downtrends.
+
+Using the same starting position with 1 SOL (worth $200) in a BONK-SOL pool:
+
+**Initial setup:** Cleopetra Cleopetra converts 0.5 SOL to BONK (worth $100)
+
+1. **After price increase:** BONK price rises 50%, now your position has:
+
+   - Less BONK
+   - More SOL (maybe 0.97)
+
+   **Rebalancing triggers:** System detects imbalance during scheduled check
+
+   **Action taken:** Converts some SOL back to BONK to restore 50/50 balance
+
+   **Result:** Position returns to 50% BONK, 50% SOL (in value) and updated price range 
+
+2. **After price decrease:** BONK price falls 50%, now your position has:
+
+   - More BONK
+   - Less SOL (maybe 0.12)
+
+   **Rebalancing triggers:** System detects imbalance during scheduled check
+
+   **Action taken: NO REBALANCING** - Dip Protection prevents rebalancing
+
+   **Result:** Position stays BONK-heavy (about 800K BONK and less SOL)
+
+   **Benefit:** If BONK price recovers, you'll have more BONK to benefit from the recovery
+
+---
+
+## How to choose:
+
+- Use **Always Rebalance** if you want hands-off, consistent management
+- Use **Dip Protection** if you believe your token will recover after dips
+
+<Note>
+
+Dip Protection is NOT applied by default and can only be enabled after creating the position under position settings.
+
+</Note>
+
+

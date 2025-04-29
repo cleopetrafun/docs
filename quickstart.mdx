@@ -5,7 +5,7 @@ icon: "bolt"
 
 ### Setting Up Your Wallet
 
-Open the [Cleopetra bot](https://t.me/cleopetra_bot) and run `/start` to get started. You may need to enter an invite code to join the platform.
+Open the [Cleopetra bot](https://t.me/cleopetra_bot?start=ref_GOLD) and run `/start` to get started. You may need to enter an invite code to join the platform.
 
 Next, deposit SOL into your wallet by copying the address. Make sure to deposit at least `0.07 SOL` for gas fees and any additional amount required to create LP positions.
 
@@ -15,7 +15,7 @@ Next, deposit SOL into your wallet by copying the address. Make sure to deposit 
 
 ### Exploring Tokens
 
-Enter `CA` in the bot chat or run `/open` to explore market data for the token you want to LP or spot trade.
+Use `/open` or enter `CA` in bot chat to explore market data of token you want to LP or spot trade!
 
 <Frame>
   <img
@@ -27,8 +27,9 @@ Enter `CA` in the bot chat or run `/open` to explore market data for the token y
 
 ### Creating LP Positions
 
-Click the `Open Position` button under the token details to create a new LP position. Select the amount of SOL you want to LP with. You will then be prompted to confirm the LP strategy and auto-rebalancing settings.  
-Currently, Cleopetra supports the Spot LP strategy. Learn more about it [here](/strategies/spot).
+Click the `Open Position` button under token details to create a new position. Select the amount of SOL you want to LP with. 
+
+You will then be prompted to confirm the LP strategy([Spot](/strategies/spot) or [Single-Sided](/strategies/single)) and auto-rebalancing settings.  
 
 Preview your LP position creation details, and once you're ready, click `Yes` to create the position.
 
@@ -45,7 +46,7 @@ position.
 
 ### Monitoring Positions
 
-The Cleopetra AI agent will automatically monitor and rebalance your positions (if enabled) to ensure they always remain in range and earn maximum fees.
+The Cleopetra agent will automatically monitor and rebalance your positions (if enabled) to ensure they always remain in range and earn maximum fees.
 
 You can also view your positions with the `/portfolio` command.
 
@@ -63,6 +64,7 @@ You can also view your positions with the `/portfolio` command.
 
 Congratulations—you’re now a successful Liquidity Provider on Solana! Make sure to try out these other commands:
 
+- `/open` — List of trending tokens to choose from.
 - `/wallet` — View and manage your wallet token balances.
 - `/portfolio` — View and manage your active positions.
 - `/settings` — Manage your bot settings, such as vault address and priority fees.
