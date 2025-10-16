@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.cleopetra.fun"
+      "url": "https://public-api.cleopetra.fun"
     }
   ],
   "components": {
@@ -28,6 +28,7 @@
     "/dlmm/initialize": {
       "post": {
         "operationId": "postDlmmInitialize",
+        "summary": "Initialize a DLMM position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -37,45 +38,57 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "zap",
                     "type": "string",
-                    "enum": ["zap", "normal"]
+                    "enum": ["zap", "normal"],
+                    "default": "zap",
+                    "description": "Transaction mode"
                   },
                   "pool": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Pool address"
                   },
                   "strategy": {
-                    "default": "bid_ask",
                     "type": "string",
-                    "enum": ["bid_ask", "curve", "spot"]
+                    "enum": ["bid_ask", "curve", "spot"],
+                    "default": "bid_ask",
+                    "description": "Liquidity distribution strategy"
                   },
                   "amount_x": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of token X"
                   },
                   "amount_y": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of token Y"
                   },
                   "amount_sol": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of SOL for zap mode"
                   },
                   "min_price": {
-                    "type": "number"
+                    "type": "string",
+                    "description": "Minimum price range"
                   },
                   "max_price": {
-                    "type": "number"
+                    "type": "string",
+                    "description": "Maximum price range"
                   },
                   "platform_fee_account": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Platform fee wallet address"
                   },
                   "platform_bps": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Platform fee in basis points"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
                 "required": [
@@ -84,8 +97,7 @@
                   "pool",
                   "strategy",
                   "min_price",
-                  "max_price",
-                  "slippage"
+                  "max_price"
                 ]
               }
             }
@@ -103,13 +115,15 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     },
                     "positions": {
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of position keypairs"
                     }
                   },
                   "required": ["transactions", "positions"]
@@ -123,6 +137,7 @@
     "/dlmm/close": {
       "post": {
         "operationId": "postDlmmClose",
+        "summary": "Close a DLMM position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -132,22 +147,26 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "zap",
                     "type": "string",
-                    "enum": ["zap", "normal"]
+                    "enum": ["zap", "normal"],
+                    "default": "zap",
+                    "description": "Transaction mode"
                   },
                   "position": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Position address to close"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
-                "required": ["user", "mode", "position", "slippage"]
+                "required": ["user", "mode", "position"]
               }
             }
           }
@@ -164,7 +183,8 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     }
                   },
                   "required": ["transactions"]
@@ -178,6 +198,7 @@
     "/dlmm/claim": {
       "post": {
         "operationId": "postDlmmClaim",
+        "summary": "Claim fees from a DLMM position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -187,22 +208,26 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "zap",
                     "type": "string",
-                    "enum": ["zap", "normal"]
+                    "enum": ["zap", "normal"],
+                    "default": "zap",
+                    "description": "Transaction mode"
                   },
                   "position": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Position address"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
-                "required": ["user", "mode", "position", "slippage"]
+                "required": ["user", "mode", "position"]
               }
             }
           }
@@ -219,7 +244,8 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     }
                   },
                   "required": ["transactions"]
@@ -233,6 +259,7 @@
     "/dlmm/rebalance": {
       "post": {
         "operationId": "postDlmmRebalance",
+        "summary": "Rebalance a DLMM position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -242,25 +269,36 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "position": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Position address to rebalance"
                   },
                   "strategy": {
-                    "default": "spot",
                     "type": "string",
-                    "enum": ["spot", "curve", "bid_ask"]
+                    "enum": ["spot", "curve", "bid_ask"],
+                    "default": "spot",
+                    "description": "Liquidity distribution strategy"
+                  },
+                  "reinvest_fees":{
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Reinvest fees into the new position"
                   },
                   "min_price": {
-                    "type": "number"
+                    "type": "string",
+                    "description": "Minimum price range"
                   },
                   "max_price": {
-                    "type": "number"
+                    "type": "string",
+                    "description": "Maximum price range"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
                 "required": [
@@ -268,8 +306,7 @@
                   "position",
                   "strategy",
                   "min_price",
-                  "max_price",
-                  "slippage"
+                  "max_price"
                 ]
               }
             }
@@ -287,13 +324,15 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     },
                     "positions": {
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of position keypairs"
                     }
                   },
                   "required": ["transactions", "positions"]
@@ -307,11 +346,13 @@
     "/dlmm/position": {
       "get": {
         "operationId": "getDlmmPosition",
+        "summary": "Get DLMM position details",
         "parameters": [
           {
             "name": "position",
             "in": "query",
             "required": true,
+            "description": "Position address",
             "schema": {
               "type": "string"
             }
@@ -388,6 +429,15 @@
                     "token_y_claimed_fees": {
                       "type": "string"
                     },
+                    "total_current_usd": {
+                      "type": "number"
+                    },
+                    "pnl_usd": {
+                      "type": "number"
+                    },
+                    "pnl": {
+                      "type": "number"
+                    },
                     "total_deposit_usd": {
                       "type": "number"
                     },
@@ -398,13 +448,13 @@
                       "type": "number"
                     },
                     "price": {
-                      "type": "string"
+                      "type": "number"
                     },
                     "max_price": {
-                      "type": "string"
+                      "type": "number"
                     },
                     "min_price": {
-                      "type": "string"
+                      "type": "number"
                     },
                     "created_at": {
                       "type": "string",
@@ -474,6 +524,9 @@
                     "token_y_unclaimed_fees",
                     "token_x_claimed_fees",
                     "token_y_claimed_fees",
+                    "total_current_usd",
+                    "pnl_usd",
+                    "pnl",
                     "total_deposit_usd",
                     "total_unclaimed_fees_usd",
                     "total_claimed_fees_usd",
@@ -493,6 +546,7 @@
     "/dammv2/initialize": {
       "post": {
         "operationId": "postDammv2Initialize",
+        "summary": "Initialize a DAMMv2 position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -502,37 +556,46 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "normal",
                     "type": "string",
-                    "enum": ["normal", "zap"]
+                    "enum": ["normal", "zap"],
+                    "default": "normal",
+                    "description": "Transaction mode"
                   },
                   "pool": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Pool address"
                   },
                   "amount_x": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of token X"
                   },
                   "amount_y": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of token Y"
                   },
                   "amount_sol": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Amount of SOL for zap mode"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   },
                   "platform_bps": {
-                    "type": "number"
+                    "type": "number",
+                    "description": "Platform fee in basis points"
                   },
                   "platform_fee_account": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Platform fee wallet address"
                   }
                 },
-                "required": ["user", "mode", "pool", "slippage"]
+                "required": ["user", "mode", "pool"]
               }
             }
           }
@@ -549,10 +612,12 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     },
                     "position_nft_mint_kp": {
-                      "type": "string"
+                      "type": "string",
+                      "description": "Position NFT mint keypair"
                     }
                   },
                   "required": ["transactions", "position_nft_mint_kp"]
@@ -566,6 +631,7 @@
     "/dammv2/close": {
       "post": {
         "operationId": "postDammv2Close",
+        "summary": "Close a DAMMv2 position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -575,22 +641,26 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "normal",
                     "type": "string",
-                    "enum": ["normal", "zap"]
+                    "enum": ["normal", "zap"],
+                    "default": "normal",
+                    "description": "Transaction mode"
                   },
                   "position": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Position address to close"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
-                "required": ["user", "mode", "position", "slippage"]
+                "required": ["user", "mode", "position"]
               }
             }
           }
@@ -607,7 +677,8 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     }
                   },
                   "required": ["transactions"]
@@ -621,6 +692,7 @@
     "/dammv2/claim": {
       "post": {
         "operationId": "postDammv2Claim",
+        "summary": "Claim fees from a DAMMv2 position",
         "parameters": [],
         "requestBody": {
           "required": true,
@@ -630,22 +702,26 @@
                 "type": "object",
                 "properties": {
                   "user": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "User wallet address"
                   },
                   "mode": {
-                    "default": "normal",
                     "type": "string",
-                    "enum": ["normal", "zap"]
+                    "enum": ["normal", "zap"],
+                    "default": "normal",
+                    "description": "Transaction mode"
                   },
                   "position": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Position address"
                   },
                   "slippage": {
+                    "type": "number",
                     "default": 500,
-                    "type": "number"
+                    "description": "Slippage tolerance in basis points"
                   }
                 },
-                "required": ["user", "mode", "position", "slippage"]
+                "required": ["user", "mode", "position"]
               }
             }
           }
@@ -662,7 +738,8 @@
                       "type": "array",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "description": "Array of base64 encoded transactions"
                     }
                   },
                   "required": ["transactions"]
@@ -676,11 +753,13 @@
     "/dammv2/position": {
       "get": {
         "operationId": "getDammv2Position",
+        "summary": "Get DAMMv2 position details",
         "parameters": [
           {
             "name": "position",
             "in": "query",
             "required": true,
+            "description": "Position address",
             "schema": {
               "type": "string"
             }
@@ -767,7 +846,7 @@
                       "type": "number"
                     },
                     "price": {
-                      "type": "string"
+                      "type": "number"
                     },
                     "created_at": {
                       "type": "string",
@@ -854,11 +933,13 @@
     "/positions": {
       "get": {
         "operationId": "getPositions",
+        "summary": "Get user positions",
         "parameters": [
           {
             "name": "user",
             "in": "query",
             "required": true,
+            "description": "User wallet address",
             "schema": {
               "type": "string"
             }
@@ -867,6 +948,7 @@
             "name": "programs",
             "in": "query",
             "required": true,
+            "description": "Programs to filter by",
             "schema": {
               "type": "array",
               "default": ["dammv2", "dlmm"],
@@ -880,6 +962,7 @@
             "name": "limit",
             "in": "query",
             "required": true,
+            "description": "Number of results per page",
             "schema": {
               "type": "number",
               "default": 10
@@ -889,6 +972,7 @@
             "name": "page",
             "in": "query",
             "required": true,
+            "description": "Page number",
             "schema": {
               "type": "number",
               "default": 1
@@ -959,6 +1043,9 @@
                             },
                             "required": ["mint", "symbol", "decimals"]
                           },
+                          "total_current_usd": {
+                            "type": "number"
+                          },
                           "total_deposit_usd": {
                             "type": "number"
                           },
@@ -989,6 +1076,7 @@
                           "pool_address",
                           "token_x_info",
                           "token_y_info",
+                          "total_current_usd",
                           "total_deposit_usd",
                           "total_unclaimed_fees_usd",
                           "total_claimed_fees_usd",
@@ -1011,11 +1099,13 @@
     "/pools/token": {
       "get": {
         "operationId": "getPoolsToken",
+        "summary": "Get pools for a specific token",
         "parameters": [
           {
             "name": "token",
             "in": "query",
             "required": true,
+            "description": "Token mint address",
             "schema": {
               "type": "string"
             }
@@ -1024,6 +1114,7 @@
             "name": "programs",
             "in": "query",
             "required": true,
+            "description": "Programs to filter by",
             "schema": {
               "type": "array",
               "default": ["dlmm", "dammv2"],
@@ -1037,6 +1128,7 @@
             "name": "order_by",
             "in": "query",
             "required": true,
+            "description": "Sort order",
             "schema": {
               "type": "string",
               "default": "desc",
@@ -1047,6 +1139,7 @@
             "name": "sort_by",
             "in": "query",
             "required": true,
+            "description": "Sort field",
             "schema": {
               "type": "string",
               "default": "volume",
