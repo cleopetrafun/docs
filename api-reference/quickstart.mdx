@@ -193,9 +193,9 @@ const createPosition = async (pool: any) => {
     mode: "zap", // Automatically converts SOL to required tokens
     pool: pool.address,
     strategy: "spot",
-    amount_sol: "1.89", // 1.89 SOL
-    min_price: minPrice,
-    max_price: maxPrice,
+    amount_sol: 1.89, // 1.89 SOL
+    min_price: minPrice.toString(),
+    max_price: maxPrice.toString(),
   };
   
   console.log("Creating position with params:", params);
@@ -307,10 +307,6 @@ const main = async () => {
 
 main();
 ```
-
-<Note>
-Refer to the full [example script](https://gist.github.com/umangveerma/f8af7391cd4bc0fd68c739d47f3042fd) for more details.
-</Note>
 
 ## Next Steps
 
