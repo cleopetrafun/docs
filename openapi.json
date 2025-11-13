@@ -5,354 +5,87 @@
     "description": "Development documentation",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "https://public-api.cleopetra.fun"
-    }
-  ],
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
-    }
-  },
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
   "paths": {
     "/dlmm/initialize": {
       "post": {
-        "operationId": "postDlmmInitialize",
+        "tags": [
+          "DLMM"
+        ],
         "summary": "Initialize a DLMM position",
-        "parameters": [],
+        "operationId": "postDlmmInitialize",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["zap", "normal"],
-                    "default": "zap",
-                    "description": "Transaction mode"
-                  },
-                  "pool": {
-                    "type": "string",
-                    "description": "Pool address"
-                  },
-                  "strategy": {
-                    "type": "string",
-                    "enum": ["bid_ask", "curve", "spot"],
-                    "default": "bid_ask",
-                    "description": "Liquidity distribution strategy"
-                  },
-                  "amount_x": {
-                    "type": "string",
-                    "description": "Amount of token X"
-                  },
-                  "amount_y": {
-                    "type": "string",
-                    "description": "Amount of token Y"
-                  },
-                  "amount_sol": {
-                    "type": "string",
-                    "description": "Amount of SOL for zap mode"
-                  },
-                  "min_price": {
-                    "type": "string",
-                    "description": "Minimum price range"
-                  },
-                  "max_price": {
-                    "type": "string",
-                    "description": "Maximum price range"
-                  },
-                  "platform_fee_account": {
-                    "type": "string",
-                    "description": "Platform fee wallet address"
-                  },
-                  "platform_bps": {
-                    "type": "number",
-                    "description": "Platform fee in basis points"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": [
-                  "user",
-                  "mode",
-                  "pool",
-                  "strategy",
-                  "min_price",
-                  "max_price"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/DlmmInitialize"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data and positions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    },
-                    "positions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of position keypairs"
-                    }
-                  },
-                  "required": ["transactions", "positions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/DlmmInitialize"
           }
         }
       }
     },
     "/dlmm/close": {
       "post": {
-        "operationId": "postDlmmClose",
+        "tags": [
+          "DLMM"
+        ],
         "summary": "Close a DLMM position",
-        "parameters": [],
+        "operationId": "postDlmmClose",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["zap", "normal"],
-                    "default": "zap",
-                    "description": "Transaction mode"
-                  },
-                  "position": {
-                    "type": "string",
-                    "description": "Position address to close"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": ["user", "mode", "position"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/DlmmClose"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    }
-                  },
-                  "required": ["transactions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Transactions"
           }
         }
       }
     },
     "/dlmm/claim": {
       "post": {
+        "tags": [
+          "DLMM"
+        ],
+        "summary": "Claim DLMM fees",
         "operationId": "postDlmmClaim",
-        "summary": "Claim fees from a DLMM position",
-        "parameters": [],
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["zap", "normal"],
-                    "default": "zap",
-                    "description": "Transaction mode"
-                  },
-                  "position": {
-                    "type": "string",
-                    "description": "Position address"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": ["user", "mode", "position"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/DlmmClaim"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    }
-                  },
-                  "required": ["transactions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Transactions"
           }
         }
       }
     },
     "/dlmm/rebalance": {
       "post": {
-        "operationId": "postDlmmRebalance",
+        "tags": [
+          "DLMM"
+        ],
         "summary": "Rebalance a DLMM position",
-        "parameters": [],
+        "operationId": "postDlmmRebalance",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "position": {
-                    "type": "string",
-                    "description": "Position address to rebalance"
-                  },
-                  "strategy": {
-                    "type": "string",
-                    "enum": ["spot", "curve", "bid_ask"],
-                    "default": "spot",
-                    "description": "Liquidity distribution strategy"
-                  },
-                  "reinvest_fees":{
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Reinvest fees into the new position"
-                  },
-                  "min_price": {
-                    "type": "string",
-                    "description": "Minimum price range"
-                  },
-                  "max_price": {
-                    "type": "string",
-                    "description": "Maximum price range"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": [
-                  "user",
-                  "position",
-                  "strategy",
-                  "min_price",
-                  "max_price"
-                ]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/DlmmRebalance"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data and positions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    },
-                    "positions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of position keypairs"
-                    }
-                  },
-                  "required": ["transactions", "positions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/DlmmRebalance"
           }
         }
       }
     },
     "/dlmm/position": {
       "get": {
+        "tags": [
+          "DLMM"
+        ],
+        "summary": "Retrieve a DLMM position",
         "operationId": "getDlmmPosition",
-        "summary": "Get DLMM position details",
         "parameters": [
           {
             "name": "position",
             "in": "query",
             "required": true,
-            "description": "Position address",
             "schema": {
               "type": "string"
             }
@@ -360,406 +93,74 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response with position details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pool": {
-                      "type": "string"
-                    },
-                    "owner": {
-                      "type": "string"
-                    },
-                    "is_active": {
-                      "type": "boolean"
-                    },
-                    "token_x_info": {
-                      "type": "object",
-                      "properties": {
-                        "mint": {
-                          "type": "string"
-                        },
-                        "symbol": {
-                          "type": "string"
-                        },
-                        "decimals": {
-                          "type": "number"
-                        },
-                        "image": {
-                          "type": "string"
-                        }
-                      },
-                      "required": ["mint", "symbol", "decimals"]
-                    },
-                    "token_y_info": {
-                      "type": "object",
-                      "properties": {
-                        "mint": {
-                          "type": "string"
-                        },
-                        "symbol": {
-                          "type": "string"
-                        },
-                        "decimals": {
-                          "type": "number"
-                        },
-                        "image": {
-                          "type": "string"
-                        }
-                      },
-                      "required": ["mint", "symbol", "decimals"]
-                    },
-                    "token_x_amount": {
-                      "type": "string"
-                    },
-                    "token_y_amount": {
-                      "type": "string"
-                    },
-                    "token_x_unclaimed_fees": {
-                      "type": "string"
-                    },
-                    "token_y_unclaimed_fees": {
-                      "type": "string"
-                    },
-                    "token_x_claimed_fees": {
-                      "type": "string"
-                    },
-                    "token_y_claimed_fees": {
-                      "type": "string"
-                    },
-                    "total_current_usd": {
-                      "type": "number"
-                    },
-                    "pnl_usd": {
-                      "type": "number"
-                    },
-                    "pnl": {
-                      "type": "number"
-                    },
-                    "total_deposit_usd": {
-                      "type": "number"
-                    },
-                    "total_unclaimed_fees_usd": {
-                      "type": "number"
-                    },
-                    "total_claimed_fees_usd": {
-                      "type": "number"
-                    },
-                    "price": {
-                      "type": "number"
-                    },
-                    "max_price": {
-                      "type": "number"
-                    },
-                    "min_price": {
-                      "type": "number"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "ixns": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ixn_type": {
-                            "type": "string"
-                          },
-                          "program_type": {
-                            "type": "string"
-                          },
-                          "signature": {
-                            "type": "string"
-                          },
-                          "position": {
-                            "type": "string"
-                          },
-                          "instruction_idx": {
-                            "type": "number"
-                          },
-                          "token_x_amount": {
-                            "type": "string"
-                          },
-                          "token_y_amount": {
-                            "type": "string"
-                          },
-                          "token_x_usd_amount": {
-                            "type": "number"
-                          },
-                          "token_y_usd_amount": {
-                            "type": "number"
-                          },
-                          "timestamp": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "ixn_type",
-                          "program_type",
-                          "signature",
-                          "position",
-                          "instruction_idx",
-                          "token_x_amount",
-                          "token_y_amount",
-                          "token_x_usd_amount",
-                          "token_y_usd_amount",
-                          "timestamp"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "pool",
-                    "owner",
-                    "is_active",
-                    "token_x_info",
-                    "token_y_info",
-                    "token_x_amount",
-                    "token_y_amount",
-                    "token_x_unclaimed_fees",
-                    "token_y_unclaimed_fees",
-                    "token_x_claimed_fees",
-                    "token_y_claimed_fees",
-                    "total_current_usd",
-                    "pnl_usd",
-                    "pnl",
-                    "total_deposit_usd",
-                    "total_unclaimed_fees_usd",
-                    "total_claimed_fees_usd",
-                    "price",
-                    "max_price",
-                    "min_price",
-                    "created_at",
-                    "ixns"
-                  ]
-                }
-              }
-            }
+            "$ref": "#/components/responses/DlmmPosition"
           }
         }
       }
     },
     "/dammv2/initialize": {
       "post": {
-        "operationId": "postDammv2Initialize",
+        "tags": [
+          "DAMMv2"
+        ],
         "summary": "Initialize a DAMMv2 position",
-        "parameters": [],
+        "operationId": "postDammv2Initialize",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["normal", "zap"],
-                    "default": "normal",
-                    "description": "Transaction mode"
-                  },
-                  "pool": {
-                    "type": "string",
-                    "description": "Pool address"
-                  },
-                  "amount_x": {
-                    "type": "string",
-                    "description": "Amount of token X"
-                  },
-                  "amount_y": {
-                    "type": "string",
-                    "description": "Amount of token Y"
-                  },
-                  "amount_sol": {
-                    "type": "string",
-                    "description": "Amount of SOL for zap mode"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  },
-                  "platform_bps": {
-                    "type": "number",
-                    "description": "Platform fee in basis points"
-                  },
-                  "platform_fee_account": {
-                    "type": "string",
-                    "description": "Platform fee wallet address"
-                  }
-                },
-                "required": ["user", "mode", "pool"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Dammv2Initialize"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data and position NFT mint",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    },
-                    "position_nft_mint_kp": {
-                      "type": "string",
-                      "description": "Position NFT mint keypair"
-                    }
-                  },
-                  "required": ["transactions", "position_nft_mint_kp"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Dammv2Initialize"
           }
         }
       }
     },
     "/dammv2/close": {
       "post": {
-        "operationId": "postDammv2Close",
+        "tags": [
+          "DAMMv2"
+        ],
         "summary": "Close a DAMMv2 position",
-        "parameters": [],
+        "operationId": "postDammv2Close",
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["normal", "zap"],
-                    "default": "normal",
-                    "description": "Transaction mode"
-                  },
-                  "position": {
-                    "type": "string",
-                    "description": "Position address to close"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": ["user", "mode", "position"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Dammv2Close"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    }
-                  },
-                  "required": ["transactions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Transactions"
           }
         }
       }
     },
     "/dammv2/claim": {
       "post": {
+        "tags": [
+          "DAMMv2"
+        ],
+        "summary": "Claim DAMMv2 fees",
         "operationId": "postDammv2Claim",
-        "summary": "Claim fees from a DAMMv2 position",
-        "parameters": [],
         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "user": {
-                    "type": "string",
-                    "description": "User wallet address"
-                  },
-                  "mode": {
-                    "type": "string",
-                    "enum": ["normal", "zap"],
-                    "default": "normal",
-                    "description": "Transaction mode"
-                  },
-                  "position": {
-                    "type": "string",
-                    "description": "Position address"
-                  },
-                  "slippage": {
-                    "type": "number",
-                    "default": 500,
-                    "description": "Slippage tolerance in basis points"
-                  }
-                },
-                "required": ["user", "mode", "position"]
-              }
-            }
-          }
+          "$ref": "#/components/requestBodies/Dammv2Claim"
         },
         "responses": {
           "200": {
-            "description": "Successful response with transaction data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transactions": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "Array of base64 encoded transactions"
-                    }
-                  },
-                  "required": ["transactions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Transactions"
           }
         }
       }
     },
     "/dammv2/position": {
       "get": {
+        "tags": [
+          "DAMMv2"
+        ],
+        "summary": "Retrieve a DAMMv2 position",
         "operationId": "getDammv2Position",
-        "summary": "Get DAMMv2 position details",
         "parameters": [
           {
             "name": "position",
             "in": "query",
             "required": true,
-            "description": "Position address",
             "schema": {
               "type": "string"
             }
@@ -767,179 +168,23 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response with position details",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "pool": {
-                      "type": "string"
-                    },
-                    "owner": {
-                      "type": "string"
-                    },
-                    "is_active": {
-                      "type": "boolean"
-                    },
-                    "token_x_info": {
-                      "type": "object",
-                      "properties": {
-                        "mint": {
-                          "type": "string"
-                        },
-                        "symbol": {
-                          "type": "string"
-                        },
-                        "decimals": {
-                          "type": "number"
-                        },
-                        "image": {
-                          "type": "string"
-                        }
-                      },
-                      "required": ["mint", "symbol", "decimals"]
-                    },
-                    "token_y_info": {
-                      "type": "object",
-                      "properties": {
-                        "mint": {
-                          "type": "string"
-                        },
-                        "symbol": {
-                          "type": "string"
-                        },
-                        "decimals": {
-                          "type": "number"
-                        },
-                        "image": {
-                          "type": "string"
-                        }
-                      },
-                      "required": ["mint", "symbol", "decimals"]
-                    },
-                    "token_x_amount": {
-                      "type": "string"
-                    },
-                    "token_y_amount": {
-                      "type": "string"
-                    },
-                    "token_x_unclaimed_fees": {
-                      "type": "string"
-                    },
-                    "token_y_unclaimed_fees": {
-                      "type": "string"
-                    },
-                    "token_x_claimed_fees": {
-                      "type": "string"
-                    },
-                    "token_y_claimed_fees": {
-                      "type": "string"
-                    },
-                    "total_deposit_usd": {
-                      "type": "number"
-                    },
-                    "total_unclaimed_fees_usd": {
-                      "type": "number"
-                    },
-                    "total_claimed_fees_usd": {
-                      "type": "number"
-                    },
-                    "price": {
-                      "type": "number"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "ixns": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "ixn_type": {
-                            "type": "string"
-                          },
-                          "program_type": {
-                            "type": "string"
-                          },
-                          "signature": {
-                            "type": "string"
-                          },
-                          "position": {
-                            "type": "string"
-                          },
-                          "instruction_idx": {
-                            "type": "number"
-                          },
-                          "token_x_amount": {
-                            "type": "string"
-                          },
-                          "token_y_amount": {
-                            "type": "string"
-                          },
-                          "token_x_usd_amount": {
-                            "type": "number"
-                          },
-                          "token_y_usd_amount": {
-                            "type": "number"
-                          },
-                          "timestamp": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        },
-                        "required": [
-                          "ixn_type",
-                          "program_type",
-                          "signature",
-                          "position",
-                          "instruction_idx",
-                          "token_x_amount",
-                          "token_y_amount",
-                          "token_x_usd_amount",
-                          "token_y_usd_amount",
-                          "timestamp"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "pool",
-                    "owner",
-                    "is_active",
-                    "token_x_info",
-                    "token_y_info",
-                    "token_x_amount",
-                    "token_y_amount",
-                    "token_x_unclaimed_fees",
-                    "token_y_unclaimed_fees",
-                    "token_x_claimed_fees",
-                    "token_y_claimed_fees",
-                    "total_deposit_usd",
-                    "total_unclaimed_fees_usd",
-                    "total_claimed_fees_usd",
-                    "price",
-                    "created_at",
-                    "ixns"
-                  ]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Dammv2Position"
           }
         }
       }
     },
-    "/positions": {
+    "/positions/": {
       "get": {
+        "tags": [
+          "Positions"
+        ],
+        "summary": "List positions for a user",
         "operationId": "getPositions",
-        "summary": "Get user positions",
         "parameters": [
           {
             "name": "user",
             "in": "query",
             "required": true,
-            "description": "User wallet address",
             "schema": {
               "type": "string"
             }
@@ -948,164 +193,63 @@
             "name": "programs",
             "in": "query",
             "required": true,
-            "description": "Programs to filter by",
+            "style": "form",
+            "explode": true,
             "schema": {
               "type": "array",
-              "default": ["dammv2", "dlmm"],
               "items": {
                 "type": "string",
-                "enum": ["dammv2", "dlmm"]
-              }
+                "enum": [
+                  "dammv2",
+                  "dlmm"
+                ]
+              },
+              "default": [
+                "dammv2",
+                "dlmm"
+              ]
             }
           },
           {
             "name": "limit",
             "in": "query",
             "required": true,
-            "description": "Number of results per page",
             "schema": {
-              "type": "number",
-              "default": 10
+              "type": "integer",
+              "default": 10,
+              "minimum": 1
             }
           },
           {
             "name": "page",
             "in": "query",
             "required": true,
-            "description": "Page number",
             "schema": {
-              "type": "number",
-              "default": 1
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response with paginated positions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "number"
-                    },
-                    "total": {
-                      "type": "number"
-                    },
-                    "positions": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "position_address": {
-                            "type": "string"
-                          },
-                          "program_type": {
-                            "type": "string"
-                          },
-                          "pool_address": {
-                            "type": "string"
-                          },
-                          "token_x_info": {
-                            "type": "object",
-                            "properties": {
-                              "mint": {
-                                "type": "string"
-                              },
-                              "symbol": {
-                                "type": "string"
-                              },
-                              "decimals": {
-                                "type": "number"
-                              },
-                              "image": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["mint", "symbol", "decimals"]
-                          },
-                          "token_y_info": {
-                            "type": "object",
-                            "properties": {
-                              "mint": {
-                                "type": "string"
-                              },
-                              "symbol": {
-                                "type": "string"
-                              },
-                              "decimals": {
-                                "type": "number"
-                              },
-                              "image": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["mint", "symbol", "decimals"]
-                          },
-                          "total_current_usd": {
-                            "type": "number"
-                          },
-                          "total_deposit_usd": {
-                            "type": "number"
-                          },
-                          "total_unclaimed_fees_usd": {
-                            "type": "number"
-                          },
-                          "total_claimed_fees_usd": {
-                            "type": "number"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "pnl": {
-                            "type": "number"
-                          },
-                          "pnl_usd": {
-                            "type": "number"
-                          },
-                          "in_range": {
-                            "type": "boolean",
-                            "nullable": true
-                          }
-                        },
-                        "required": [
-                          "position_address",
-                          "program_type",
-                          "pool_address",
-                          "token_x_info",
-                          "token_y_info",
-                          "total_current_usd",
-                          "total_deposit_usd",
-                          "total_unclaimed_fees_usd",
-                          "total_claimed_fees_usd",
-                          "created_at",
-                          "pnl",
-                          "pnl_usd",
-                          "in_range"
-                        ]
-                      }
-                    }
-                  },
-                  "required": ["count", "total", "positions"]
-                }
-              }
-            }
+            "$ref": "#/components/responses/Positions"
           }
         }
       }
     },
     "/pools/token": {
       "get": {
+        "tags": [
+          "Pools"
+        ],
+        "summary": "List pools for a token",
         "operationId": "getPoolsToken",
-        "summary": "Get pools for a specific token",
         "parameters": [
           {
             "name": "token",
             "in": "query",
             "required": true,
-            "description": "Token mint address",
             "schema": {
               "type": "string"
             }
@@ -1114,155 +258,1006 @@
             "name": "programs",
             "in": "query",
             "required": true,
-            "description": "Programs to filter by",
+            "style": "form",
+            "explode": true,
             "schema": {
               "type": "array",
-              "default": ["dlmm", "dammv2"],
               "items": {
                 "type": "string",
-                "enum": ["dlmm", "dammv2"]
-              }
+                "enum": [
+                  "dlmm",
+                  "dammv2"
+                ]
+              },
+              "default": [
+                "dlmm",
+                "dammv2"
+              ]
             }
           },
           {
             "name": "order_by",
             "in": "query",
             "required": true,
-            "description": "Sort order",
             "schema": {
               "type": "string",
               "default": "desc",
-              "enum": ["desc", "asc"]
+              "enum": [
+                "desc",
+                "asc"
+              ]
             }
           },
           {
             "name": "sort_by",
             "in": "query",
             "required": true,
-            "description": "Sort field",
             "schema": {
               "type": "string",
               "default": "volume",
-              "enum": ["tvl", "volume", "feetvlratio"]
+              "enum": [
+                "tvl",
+                "volume",
+                "feetvlratio"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful response with pool information",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "default": "Dlmm",
-                        "enum": ["Dlmm", "DammV2"]
-                      },
-                      "address": {
-                        "type": "string"
-                      },
-                      "token_x_info": {
-                        "type": "object",
-                        "properties": {
-                          "mint": {
-                            "type": "string"
-                          },
-                          "symbol": {
-                            "type": "string"
-                          },
-                          "decimals": {
-                            "type": "number"
-                          },
-                          "image": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["mint", "symbol", "decimals"]
-                      },
-                      "token_y_info": {
-                        "type": "object",
-                        "properties": {
-                          "mint": {
-                            "type": "string"
-                          },
-                          "symbol": {
-                            "type": "string"
-                          },
-                          "decimals": {
-                            "type": "number"
-                          },
-                          "image": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["mint", "symbol", "decimals"]
-                      },
-                      "reserve_x_amount": {
-                        "type": "number"
-                      },
-                      "reserve_y_amount": {
-                        "type": "number"
-                      },
-                      "tvl": {
-                        "type": "number"
-                      },
-                      "fees_24h": {
-                        "type": "number"
-                      },
-                      "volume_24h": {
-                        "type": "number"
-                      },
-                      "fee_tvl_ratio": {
-                        "type": "number"
-                      },
-                      "apr": {
-                        "type": "number"
-                      },
-                      "price": {
-                        "type": "number"
-                      },
-                      "bin_step": {
-                        "type": "number"
-                      },
-                      "base_fee_percentage": {
-                        "type": "number"
-                      },
-                      "sqrt_price": {
-                        "type": "number"
-                      },
-                      "sqrt_min_price": {
-                        "type": "string"
-                      },
-                      "sqrt_max_price": {
-                        "type": "string"
-                      },
-                      "fee_scheduler_mode": {
-                        "type": "string",
-                        "default": "Linear",
-                        "enum": ["Linear", "Exponential"]
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "address",
-                      "token_x_info",
-                      "token_y_info",
-                      "reserve_x_amount",
-                      "reserve_y_amount",
-                      "tvl",
-                      "fees_24h",
-                      "volume_24h",
-                      "fee_tvl_ratio",
-                      "apr",
-                      "price"
-                    ]
-                  }
-                }
-              }
+            "$ref": "#/components/responses/PoolsByToken"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Timestamp": {
+        "oneOf": [
+          {
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "type": "integer"
+          },
+          {
+            "type": "number"
+          }
+        ],
+        "description": "Timestamp represented as an ISO string or unix epoch."
+      },
+      "TokenInfo": {
+        "type": "object",
+        "properties": {
+          "mint": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "decimals": {
+            "type": "integer"
+          },
+          "image": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "mint",
+          "symbol",
+          "decimals"
+        ]
+      },
+      "PositionInstruction": {
+        "type": "object",
+        "properties": {
+          "ixn_type": {
+            "type": "string"
+          },
+          "program_type": {
+            "type": "string"
+          },
+          "signature": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "instruction_idx": {
+            "type": "integer"
+          },
+          "token_x_amount": {
+            "type": "string"
+          },
+          "token_y_amount": {
+            "type": "string"
+          },
+          "token_x_usd_amount": {
+            "type": "number"
+          },
+          "token_y_usd_amount": {
+            "type": "number"
+          },
+          "timestamp": {
+            "$ref": "#/components/schemas/Timestamp"
+          }
+        },
+        "required": [
+          "ixn_type",
+          "program_type",
+          "signature",
+          "position",
+          "instruction_idx",
+          "token_x_amount",
+          "token_y_amount",
+          "token_x_usd_amount",
+          "token_y_usd_amount",
+          "timestamp"
+        ]
+      },
+      "DlmmPosition": {
+        "type": "object",
+        "properties": {
+          "pool": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "token_x_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_y_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_x_amount": {
+            "type": "string"
+          },
+          "token_y_amount": {
+            "type": "string"
+          },
+          "token_x_unclaimed_fees": {
+            "type": "string"
+          },
+          "token_y_unclaimed_fees": {
+            "type": "string"
+          },
+          "token_x_claimed_fees": {
+            "type": "string"
+          },
+          "token_y_claimed_fees": {
+            "type": "string"
+          },
+          "total_current_usd": {
+            "type": "number"
+          },
+          "pnl_usd": {
+            "type": "number"
+          },
+          "pnl": {
+            "type": "number"
+          },
+          "total_deposit_usd": {
+            "type": "number"
+          },
+          "total_unclaimed_fees_usd": {
+            "type": "number"
+          },
+          "total_claimed_fees_usd": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "max_price": {
+            "type": "number"
+          },
+          "min_price": {
+            "type": "number"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "ixns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionInstruction"
+            }
+          }
+        },
+        "required": [
+          "pool",
+          "owner",
+          "is_active",
+          "token_x_info",
+          "token_y_info",
+          "token_x_amount",
+          "token_y_amount",
+          "token_x_unclaimed_fees",
+          "token_y_unclaimed_fees",
+          "token_x_claimed_fees",
+          "token_y_claimed_fees",
+          "total_current_usd",
+          "pnl_usd",
+          "pnl",
+          "total_deposit_usd",
+          "total_unclaimed_fees_usd",
+          "total_claimed_fees_usd",
+          "price",
+          "max_price",
+          "min_price",
+          "created_at",
+          "ixns"
+        ]
+      },
+      "Dammv2Position": {
+        "type": "object",
+        "properties": {
+          "pool": {
+            "type": "string"
+          },
+          "owner": {
+            "type": "string"
+          },
+          "is_active": {
+            "type": "boolean"
+          },
+          "token_x_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_y_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_x_amount": {
+            "type": "string"
+          },
+          "token_y_amount": {
+            "type": "string"
+          },
+          "token_x_unclaimed_fees": {
+            "type": "string"
+          },
+          "token_y_unclaimed_fees": {
+            "type": "string"
+          },
+          "token_x_claimed_fees": {
+            "type": "string"
+          },
+          "token_y_claimed_fees": {
+            "type": "string"
+          },
+          "total_deposit_usd": {
+            "type": "number"
+          },
+          "total_unclaimed_fees_usd": {
+            "type": "number"
+          },
+          "total_claimed_fees_usd": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "ixns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionInstruction"
+            }
+          }
+        },
+        "required": [
+          "pool",
+          "owner",
+          "is_active",
+          "token_x_info",
+          "token_y_info",
+          "token_x_amount",
+          "token_y_amount",
+          "token_x_unclaimed_fees",
+          "token_y_unclaimed_fees",
+          "token_x_claimed_fees",
+          "token_y_claimed_fees",
+          "total_deposit_usd",
+          "total_unclaimed_fees_usd",
+          "total_claimed_fees_usd",
+          "price",
+          "created_at",
+          "ixns"
+        ]
+      },
+      "PositionSummary": {
+        "type": "object",
+        "properties": {
+          "position_address": {
+            "type": "string"
+          },
+          "program_type": {
+            "type": "string"
+          },
+          "pool_address": {
+            "type": "string"
+          },
+          "token_x_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_y_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "total_current_usd": {
+            "type": "number"
+          },
+          "total_deposit_usd": {
+            "type": "number"
+          },
+          "total_unclaimed_fees_usd": {
+            "type": "number"
+          },
+          "total_claimed_fees_usd": {
+            "type": "number"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/Timestamp"
+          },
+          "pnl": {
+            "type": "number"
+          },
+          "pnl_usd": {
+            "type": "number"
+          },
+          "in_range": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "position_address",
+          "program_type",
+          "pool_address",
+          "token_x_info",
+          "token_y_info",
+          "total_current_usd",
+          "total_deposit_usd",
+          "total_unclaimed_fees_usd",
+          "total_claimed_fees_usd",
+          "created_at",
+          "pnl",
+          "pnl_usd",
+          "in_range"
+        ]
+      },
+      "PositionsResponse": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PositionSummary"
+            }
+          }
+        },
+        "required": [
+          "count",
+          "total",
+          "positions"
+        ]
+      },
+      "PoolOverview": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "Dlmm",
+              "DammV2"
+            ],
+            "default": "Dlmm"
+          },
+          "address": {
+            "type": "string"
+          },
+          "token_x_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "token_y_info": {
+            "$ref": "#/components/schemas/TokenInfo"
+          },
+          "reserve_x_amount": {
+            "type": "number"
+          },
+          "reserve_y_amount": {
+            "type": "number"
+          },
+          "tvl": {
+            "type": "number"
+          },
+          "fees_24h": {
+            "type": "number"
+          },
+          "volume_24h": {
+            "type": "number"
+          },
+          "fee_tvl_ratio": {
+            "type": "number"
+          },
+          "apr": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          },
+          "bin_step": {
+            "type": "number"
+          },
+          "base_fee_percentage": {
+            "type": "number"
+          },
+          "sqrt_price": {
+            "type": "number"
+          },
+          "sqrt_min_price": {
+            "type": "string"
+          },
+          "sqrt_max_price": {
+            "type": "string"
+          },
+          "fee_scheduler_mode": {
+            "type": "string",
+            "enum": [
+              "Linear",
+              "Exponential"
+            ],
+            "default": "Linear"
+          }
+        },
+        "required": [
+          "type",
+          "address",
+          "token_x_info",
+          "token_y_info",
+          "reserve_x_amount",
+          "reserve_y_amount",
+          "tvl",
+          "fees_24h",
+          "volume_24h",
+          "fee_tvl_ratio",
+          "apr",
+          "price"
+        ]
+      },
+      "PoolsByTokenResponse": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/PoolOverview"
+        }
+      },
+      "DlmmInitializeRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "zap",
+              "normal"
+            ],
+            "default": "zap"
+          },
+          "pool": {
+            "type": "string"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "bid_ask",
+              "curve",
+              "spot"
+            ],
+            "default": "bid_ask"
+          },
+          "amount_x": {
+            "type": "number"
+          },
+          "amount_y": {
+            "type": "number"
+          },
+          "amount_sol": {
+            "type": "number"
+          },
+          "min_price": {
+            "type": "string"
+          },
+          "max_price": {
+            "type": "string"
+          },
+          "liquidity_distribution": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "platform_fee_account": {
+            "type": "string"
+          },
+          "platform_bps": {
+            "type": "integer"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "pool",
+          "strategy",
+          "min_price",
+          "max_price",
+          "slippage"
+        ]
+      },
+      "DlmmInitializeResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "positions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "transactions",
+          "positions"
+        ]
+      },
+      "DlmmCloseRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "zap",
+              "normal"
+            ],
+            "default": "zap"
+          },
+          "position": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "position",
+          "slippage"
+        ]
+      },
+      "DlmmClaimRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "zap",
+              "normal"
+            ],
+            "default": "zap"
+          },
+          "position": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "position",
+          "slippage"
+        ]
+      },
+      "DlmmRebalanceRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "spot",
+              "curve",
+              "bid_ask"
+            ],
+            "default": "spot"
+          },
+          "min_price": {
+            "type": "string"
+          },
+          "max_price": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          },
+          "reinvest_fees": {
+            "type": "boolean",
+            "default": false
+          },
+          "liquidity_distribution": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "platform_fee_account": {
+            "type": "string"
+          },
+          "platform_bps": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "user",
+          "position",
+          "strategy",
+          "min_price",
+          "max_price",
+          "slippage",
+          "reinvest_fees"
+        ]
+      },
+      "TransactionsResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "transactions"
+        ]
+      },
+      "Dammv2InitializeRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "zap"
+            ],
+            "default": "normal"
+          },
+          "pool": {
+            "type": "string"
+          },
+          "amount_x": {
+            "type": "string"
+          },
+          "amount_y": {
+            "type": "string"
+          },
+          "amount_sol": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          },
+          "platform_bps": {
+            "type": "integer"
+          },
+          "platform_fee_account": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "pool",
+          "slippage"
+        ]
+      },
+      "Dammv2InitializeResponse": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "position_nft_mint_kp": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "transactions",
+          "position_nft_mint_kp"
+        ]
+      },
+      "Dammv2CloseRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "zap"
+            ],
+            "default": "normal"
+          },
+          "position": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "position",
+          "slippage"
+        ]
+      },
+      "Dammv2ClaimRequest": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "zap"
+            ],
+            "default": "normal"
+          },
+          "position": {
+            "type": "string"
+          },
+          "slippage": {
+            "type": "integer",
+            "default": 500
+          }
+        },
+        "required": [
+          "user",
+          "mode",
+          "position",
+          "slippage"
+        ]
+      }
+    },
+    "requestBodies": {
+      "DlmmInitialize": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmInitializeRequest"
+            }
+          }
+        }
+      },
+      "DlmmClose": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmCloseRequest"
+            }
+          }
+        }
+      },
+      "DlmmClaim": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmClaimRequest"
+            }
+          }
+        }
+      },
+      "DlmmRebalance": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmRebalanceRequest"
+            }
+          }
+        }
+      },
+      "Dammv2Initialize": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Dammv2InitializeRequest"
+            }
+          }
+        }
+      },
+      "Dammv2Close": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Dammv2CloseRequest"
+            }
+          }
+        }
+      },
+      "Dammv2Claim": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Dammv2ClaimRequest"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "DlmmInitialize": {
+        "description": "Transactions and new DLMM positions.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmInitializeResponse"
+            }
+          }
+        }
+      },
+      "DlmmRebalance": {
+        "description": "Transactions and updated DLMM positions after rebalance.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmInitializeResponse"
+            }
+          }
+        }
+      },
+      "Transactions": {
+        "description": "Transactions required to perform the requested action.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TransactionsResponse"
+            }
+          }
+        }
+      },
+      "Dammv2Initialize": {
+        "description": "Transactions and mint keypair produced by DAMMv2 initialize.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Dammv2InitializeResponse"
+            }
+          }
+        }
+      },
+      "DlmmPosition": {
+        "description": "Detailed DLMM position state.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/DlmmPosition"
+            }
+          }
+        }
+      },
+      "Dammv2Position": {
+        "description": "Detailed DAMMv2 position state.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Dammv2Position"
+            }
+          }
+        }
+      },
+      "Positions": {
+        "description": "Paginated list of positions for the user.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PositionsResponse"
+            }
+          }
+        }
+      },
+      "PoolsByToken": {
+        "description": "Pools that include the requested token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PoolsByTokenResponse"
             }
           }
         }
