@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "mint",
   "name": "Cleopetra",
   "colors": {
     "primary": "#1A170C",
@@ -9,6 +9,25 @@
   },
   "favicon": "/logo/cleo-light.png",
   "navigation": {
+    "global":  {
+      "anchors": [
+        {
+          "anchor": "Get Started",
+          "icon": "fire",
+          "href": "https://cleopetra.fun/"
+        },
+        {
+          "anchor": "Twitter",
+          "icon": "x-twitter",
+          "href": "https://x.com/cleopetrafun"
+        },
+        {
+          "anchor": "Discord",
+          "icon": "discord",
+          "href": "https://discord.gg/Wd2Zc5gegq"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Documentation",
@@ -16,60 +35,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": ["welcome", "quickstart", "faqs"]
-          },
-          {
-            "group": "Strategies",
-            "pages": [
-              "strategies/spot",
-              "strategies/single",
-              "strategies/rebalancing"
-            ]
-          },
-          {
-            "group": "Community",
-            "pages": ["community/links", "community/deeplink"]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "icon": "square-terminal",
-        "groups": [
-            {
-              "group": "Get Started",
-              "pages": ["api-reference/introduction", "api-reference/quickstart"]
-            },
-            {
-              "group": "Data",
-              "pages": [
-                "api-reference/data/pools",
-                "api-reference/data/positions",
-                "api-reference/data/dlmm-position",
-                "api-reference/data/dammv2-position"
-              ]
-            },
-          {
-            "group": "Transactions",
-            "pages": [
-              {
-                "group": "DLMM",
-                "pages": [
-                  "api-reference/transactions/dlmm/initialize",
-                  "api-reference/transactions/dlmm/claim",
-                  "api-reference/transactions/dlmm/rebalance",
-                  "api-reference/transactions/dlmm/close"
-                ]
-              },
-              {
-                "group": "DAMM v2",
-                "pages": [
-                  "api-reference/transactions/dammV2/initialize",
-                  "api-reference/transactions/dammV2/claim",
-                  "api-reference/transactions/dammV2/close"
-                ]
-              }
-            ]
+            "pages": ["welcome"]
           }
         ]
       }
@@ -80,12 +46,6 @@
     "dark": "/logo/cleo-light.png"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "Community",
-        "href": "https://discord.gg/Wd2Zc5gegq"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Get Started",
