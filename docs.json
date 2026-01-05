@@ -34,7 +34,7 @@
         "icon": "book",
         "groups": [
           {
-            "group": "Overview",
+            "group": "About",
             "pages": ["welcome"]
           }
         ]
